@@ -1,0 +1,9 @@
+\babel@toc {english}{}
+\contentsline {figure}{\numberline {1}{\ignorespaces Example of K-means usage on artificial data. }}{5}{figure.1}
+\contentsline {figure}{\numberline {2}{\ignorespaces Example of K-means usage on artificial data: output.}}{5}{figure.2}
+\contentsline {figure}{\numberline {3}{\ignorespaces Noise dataset without anomaly.}}{6}{figure.3}
+\contentsline {figure}{\numberline {4}{\ignorespaces Noise dataset with an anomlay.}}{7}{figure.4}
+\contentsline {figure}{\numberline {5}{\ignorespaces Amazon's server CPU usage with a known anomaly }}{8}{figure.5}
+\contentsline {figure}{\numberline {6}{\ignorespaces Centroids obtained using K-means algorithm}}{9}{figure.6}
+\contentsline {figure}{\numberline {7}{\ignorespaces Noise signal.}}{10}{figure.7}
+\contentsline {figure}{\numberline {8}{\ignorespaces $68 \_–95 \_–99.7$ rule.}}{11}{figure.8}
