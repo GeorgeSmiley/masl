@@ -6,7 +6,7 @@
 \title{Anomaly detection using K-means}
 \author{Author: Tommaso Puccetti}
 \institute{Universit\`a  degli Studi di Firenze}
-\date{21/12/2018}
+\date{//2019}
 %\usepackage{sansmathaccent}
 \usetheme{Berlin} 
 \useinnertheme{rounded}
@@ -141,7 +141,7 @@ for i in range(self.k):
 
 	\begin{frame}[fragile]
 		\frametitle{K-means: implementation (4)}
-		\item Repeats from point 2 to point 3 until the new centroids are equal to the centroids from the previous step.
+		Repeats from point 2 to point 3 until the new centroids are equal to the centroids from the previous step.
 		\begin{lstlisting}
 if np.all(centers == new_centers):
 	break
@@ -154,7 +154,10 @@ if np.all(centers == new_centers):
 		\frametitle{K-means: example}
 		The \textbf{\textit{kmeans\_sk.py}} file contains an example of usage for the algorithm. The artificial data presents 4 distinct points aggregates. Using the \textbf{\textit{fit()}} method with $K = 4$ the algorithm, as we expected, identifies the 4 aggregates of points as 4 clusters.
 		
-		INSERIRE IMMAGINI ESEMPIO AFFIANCATE
+			\begin{figure}[h!]
+			\centering
+			\includegraphics[scale=0.3]{img/example.png}
+		\end{figure}
 	\end{frame}
 
 	\begin{frame}[fragile]
@@ -192,8 +195,10 @@ if np.all(centers == new_centers):
 
 	\begin{frame}
 		\frametitle{Segmentation}
-		INSERIRE IMMAGINE FINESTRE
-		
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[scale=0.25]{img/segmentation.png}
+		\end{figure}
 	\end{frame}
 
 	\begin{frame}[fragile]
@@ -271,6 +276,112 @@ centr, slide_len, segment_len)
 		\end{figure}
 	\end{frame}
 
+	\begin{frame}
+		\frametitle{Detecting anomalies (1)}
+		The noise obtained from previous step can be analized to detect anomalies:
+		\begin{enumerate}
+			\item the noise signal is defined as being normally distributed with a mean of zero;
+			\item if it suddenly changes into another distribution, something unusual or anomalous is happening;
+			\item to spot outliers values in the noise distribution we use a treshold value defined as:
+				$$ mean \pm 4\sigma $$
+		\end{enumerate}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Detecting anomalies (2)}
+			In fact values lower than $mean-4\sigma$ deviation and higher than $mean + 4\sigma$ should be extremely rare and could be considered as an anomaly: 
+		\begin{itemize}
+			\item $68\%$ of all values fall between $[mean-\sigma; mean+\sigma]$;
+			\item $95\%$ of all values fall between $[mean-2\sigma; mean+2\sigma]$; 
+			\item $99,7\%$ of all values fall between $[mean-3\sigma; mean+3\sigma]$ 
+		\end{itemize}
+		
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[scale=0.05]{img/rule.png}
+		\end{figure}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Detecting anomalies (3)}
+		\begin{lstlisting}
+pos_treshold = np.mean(noise) + coef * np.std(noise)
+neg_treshold = np.mean(noise) - coef * np.std(noise)
+anomalies = []
+		
+for i in range(0,len(noise)):
+	if(noise[i] <= neg_treshold):
+		anomalies.append((i,noise[i]))
+	if(noise[i] > pos_treshold):
+		anomalies.append((i, noise[i]))
+		\end{lstlisting}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Detecting anomalies (4)}
+					The \textit{if} branches are used to detect and store anomalies in a Python list, returned as output of the function. 
+		
+		\begin{lstlisting}
+		[[1752.     136.241]
+		[1753.     136.351]
+		[1754.     137.356]
+		[1755.     137.524]
+		.
+		.
+		.
+		[1875.     133.178]
+		[1876.     127.938]
+		[1877.     135.216]
+		[1878.     135.596]
+		[1879.     109.638]
+		[1880.     136.132]]
+		\end{lstlisting}
+	\end{frame}	
+
+	\begin{frame}[fragile]
+		\frametitle{Libraries}
+		
+		\begin{lstlisting}
+import skmeans
+import matplotlib.pyplot as plt
+import learn_utils
+import numpy as np
+import import_dataset as imp
+import detection
+		\end{lstlisting}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Conclusion}
+		The first part of the code (noise production) can be used as base to implement an anomaly detection wich use different approach for detection:
+		\begin{itemize}
+			\item a sliding window can be used to detect changes in the noise distribution rather then use a treshold value to detect outliers values;
+			\item if the mean and standard derivation of this window change too much from their expected values, we can deduce an anomaly.
+			\item the use of the sliding windows could be combined with the outliers detection to improve the detection precision.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{Dataset}
+		The dataset used is the Numenta Anomaly Benchmark (NAB) that is a benchmark for evaluating algorithms for anomaly detection in streaming and online applications.
+		
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[scale=0.08]{img/github.png}
+		\end{figure}
 	
+		The dataset is open source and available for dowload at:\\
+		\href{github.com/numenta/NAB}{github.com/numenta/NAB}.
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Project's repository}
+		The code of the project can be reached at
+		 \href{https://github.com/GeorgeSmiley/masl}{https://github.com/GeorgeSmiley/masl}.
+		 \begin{figure}[h!]
+		 	\centering
+		 	\includegraphics[scale=0.08]{img/github.png}
+		 \end{figure}
+	\end{frame}
 	
 \end{document}

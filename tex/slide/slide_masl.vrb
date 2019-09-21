@@ -1,13 +1,7 @@
-\frametitle{Reconstruction (3)}
-		Finally the reconstruction algorithm is used to obtain the whole waweform.
-
-		\begin{lstlisting}
-noise = detection.reconstruction(dataset_array, segments, lab,
-centr, slide_len, segment_len)
-		\end{lstlisting}
-		The noise obtained as output is ploted along with the original and the reconstructed waweform.
-
-		\begin{figure}[h!]
-			\centering
-			\includegraphics[scale=0.3]{img/noise.png}
-		\end{figure}
+\frametitle{Project's repository}
+		The code of the project can be reached at
+		 \href{https://github.com/GeorgeSmiley/masl}{https://github.com/GeorgeSmiley/masl}.
+		 \begin{figure}[h!]
+		 	\centering
+		 	\includegraphics[scale=0.08]{img/github.png}
+		 \end{figure}
