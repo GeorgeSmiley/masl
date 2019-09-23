@@ -6,7 +6,7 @@
 \title{Anomaly detection using K-means}
 \author{Author: Tommaso Puccetti}
 \institute{Universit\`a  degli Studi di Firenze}
-\date{//2019}
+\date{23/09/2019}
 %\usepackage{sansmathaccent}
 \usetheme{Berlin} 
 \useinnertheme{rounded}
@@ -76,7 +76,7 @@
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{Non-hierarchical clustering: K-means}
+		\frametitle{Non-Hierarchical clustering: K-means}
 		K-means clustering is one of the simplest and popular unsupervised machine learning algorithms. The aim is to find a partition of the dataset into a set of K clusters that optimizes the chosen partitioning criterion.
 		
 		\begin{enumerate}
@@ -86,15 +86,14 @@
 			using an opportune distance measure (usually Euclidean or Manhattan);
 			\item calculate the centroid of each cluster and use it as
 			the new cluster center;
-			\item go back to step 2, stop when cluster centers
-			do not change any more.
+			\item go back to step 2, stop when the centroids are the same as those in the previous step.
 		\end{enumerate}
 	\end{frame}
 
 	\begin{frame}[fragile]
 		\frametitle{K-means: implementation (1)}
 		\begin{itemize}
-			\item First of all the algorithm choose K random centroid.
+			\item First of all the algorithm chooses K random centroid.
 			\begin{lstlisting}
 z = self.rng.permutation(len(X))[:self.k]
 X = np.array(X, dtype= "float64")
@@ -123,7 +122,7 @@ for i in range(self.k):
 	\begin{frame}[fragile]
 		\frametitle{K-means: implementation (3)}	
 		\begin{itemize}
-			\item For each cluster the algorithm \textbf{calculates the new centroid} as the mean of the points assigned to them:
+			\item For each cluster the algorithm \textbf{calculates the new centroid} as the mean of the points assigned to it:
 			
 			\begin{lstlisting}
 for i in range(self.k):
@@ -152,7 +151,7 @@ if np.all(centers == new_centers):
 
 	\begin{frame}[fragile]
 		\frametitle{K-means: example}
-		The \textbf{\textit{kmeans\_sk.py}} file contains an example of usage for the algorithm. The artificial data presents 4 distinct points aggregates. Using the \textbf{\textit{fit()}} method with $K = 4$ the algorithm, as we expected, identifies the 4 aggregates of points as 4 clusters.
+		The \textbf{\textit{kmeans\_sk.py}} file contains an example of usage for the algorithm. The artificial dataset presents 4 distinct points aggregates. Using the \textbf{\textit{fit()}} method with $K = 4$ the algorithm, as we expected, identifies the 4 aggregates of points as 4 clusters.
 		
 			\begin{figure}[h!]
 			\centering
@@ -181,7 +180,7 @@ if np.all(centers == new_centers):
 		\begin{itemize}
 			\item split the waweform into \textbf{\textit{n}} segments of length \textbf{\textit{l}}: every segment is considered a statistical unit;
 			\item apply the K-means algorithm over the l-dimension points obtained (segments). The results are K cluster's \textit{centroids};
-			\item a centroid is a segments itself that can be used to reconstruct the original waweform: for every segments the nearest centroid is used to approximate the current;
+			\item a centroid is a segment itself that can be used to reconstruct the original waweform: each original segment is replaced by its nearest centroid;
 		\end{itemize}
 	\end{frame}
 
@@ -189,7 +188,7 @@ if np.all(centers == new_centers):
 		\frametitle{Anomaly detection using K-means: implementation (2)}
 		\begin{itemize}
 			\item once obtained a recostructed waweform using only centroids, we can subtract it from the original: the result is also a waweform that rapresents the noise signal between the two;
-			\item the last step is to use a treshold value to detect where the error between the original and the reconstructed waweforms is anomalous in respect to the noise obtained. 
+			\item the last step is to use a treshold value to detect where the error between the original and the reconstructed waweform is anomalous in respect to the noise obtained. 
 		\end{itemize}
 	\end{frame}
 
@@ -204,7 +203,7 @@ if np.all(centers == new_centers):
 	\begin{frame}[fragile]
 		\frametitle{Segmentation}
 		
-		The segmentation is done using the \textit{segmentation()} function implemented in the K-means class.
+		Segmentation is done using the \textit{segmentation()} function implemented in the K-means class.
 		
 		\begin{lstlisting}
 segment_len = 32
@@ -223,7 +222,7 @@ segments = km.segmentation(train_array, segment_len, slide_len)
 		centr = km.fit(segments)
 		learn_utils.plot_waves(centr, step=3)
 		\end{lstlisting}	
-		The output would be a Numpy's array containing K centroids of the dataset. The picture below shows some of the normal waweform obtained.
+		The output would be a Numpy's array containing K centroids. 
 		
 		\begin{figure}[h!]
 			\centering
@@ -268,7 +267,7 @@ Predicted Labels
 noise = detection.reconstruction(dataset_array, segments, lab, 
 centr, slide_len, segment_len)
 		\end{lstlisting}
-		The noise obtained as output is ploted along with the original and the reconstructed waweform.
+		The noise obtained as output is plotted along with the original and the reconstructed waweform.
 		
 		\begin{figure}[h!]
 			\centering
@@ -357,7 +356,7 @@ import detection
 		\begin{itemize}
 			\item a sliding window can be used to detect changes in the noise distribution rather then use a treshold value to detect outliers values;
 			\item if the mean and standard derivation of this window change too much from their expected values, we can deduce an anomaly.
-			\item the use of the sliding windows could be combined with the outliers detection to improve the detection precision.
+			\item the use of the sliding window could be combined with the outliers detection to improve detection precision.
 		\end{itemize}
 	\end{frame}
 
@@ -370,7 +369,7 @@ import detection
 			\includegraphics[scale=0.08]{img/github.png}
 		\end{figure}
 	
-		The dataset is open source and available for dowload at:\\
+		The dataset is open source and available for download at:\\
 		\href{github.com/numenta/NAB}{github.com/numenta/NAB}.
 	\end{frame}
 	
